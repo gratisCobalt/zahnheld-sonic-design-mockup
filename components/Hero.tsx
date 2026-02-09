@@ -2,18 +2,6 @@ import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { VIDEOS } from '../types';
 
-const AnimatedLine = ({ text, delay }: { text: string; delay: number }) => (
-  <div className="overflow-hidden">
-    <motion.div
-      initial={{ y: '110%' }}
-      animate={{ y: '0%' }}
-      transition={{ duration: 1.2, delay, ease: [0.16, 1, 0.3, 1] }}
-    >
-      <span className="block text-display">{text}</span>
-    </motion.div>
-  </div>
-);
-
 const Hero: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -22,82 +10,130 @@ const Hero: React.FC = () => {
     offset: ['start start', 'end start'],
   });
 
-  const videoScale = useTransform(scrollYProgress, [0, 1], [1, 1.2]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const contentY = useTransform(scrollYProgress, [0, 0.5], ['0%', '30%']);
+  // Scroll-linked transforms
+  const videoScale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
+  const productY = useTransform(scrollYProgress, [0, 1], ['0%', '-25%']);
+  const productScale = useTransform(scrollYProgress, [0, 0.5], [1, 1.06]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
+  const textY = useTransform(scrollYProgress, [0, 0.5], ['0%', '8%']);
 
   return (
     <section ref={containerRef} className="relative w-full h-[200vh] bg-black z-40">
       <div className="sticky top-0 w-full h-screen overflow-hidden">
-        {/* Video Background */}
+
+        {/* ── VIDEO BACKGROUND ── */}
         <motion.div style={{ scale: videoScale }} className="absolute inset-0 z-0">
           <video
             autoPlay
             loop
             muted
             playsInline
-            className="w-full h-full object-cover grayscale opacity-80 contrast-110"
+            className="w-full h-full object-cover opacity-60"
+            style={{ filter: 'grayscale(0.8) contrast(1.1)' }}
           >
             <source src={VIDEOS.hero} type="video/mp4" />
           </video>
         </motion.div>
 
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 z-[1] bg-gradient-to-t from-black via-black/60 to-black/30" />
+        {/* ── GRADIENT OVERLAYS ── */}
+        <div className="absolute inset-0 z-[1] bg-gradient-to-t from-black via-black/70 to-black/20" />
+        <div className="absolute inset-0 z-[1] bg-gradient-to-r from-black/40 to-transparent" />
 
-        {/* Content */}
+        {/* ── MASSIVE TYPOGRAPHY ── */}
         <motion.div
-          style={{ opacity: contentOpacity, y: contentY }}
-          className="relative z-10 h-full flex flex-col justify-end pb-20 px-8 md:px-16"
+          style={{ opacity: contentOpacity, y: textY }}
+          className="absolute inset-0 z-[2] flex flex-col justify-end px-6 md:px-12 lg:px-16 pb-32 md:pb-28"
         >
+          {/* Label */}
           <motion.span
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="section-label text-white/60 mb-6"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="section-label text-white/50 mb-4 md:mb-6"
           >
             GERMAN PRECISION
           </motion.span>
 
-          <AnimatedLine text="SILENT" delay={0.3} />
-          <AnimatedLine text="POWER." delay={0.5} />
+          {/* Line 1 */}
+          <div className="overflow-hidden">
+            <motion.h1
+              initial={{ y: '110%' }}
+              animate={{ y: '0%' }}
+              transition={{ duration: 1.4, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              className="font-serif text-white leading-[0.85] tracking-[-0.03em]"
+              style={{ fontSize: 'clamp(3.5rem, 15vw, 18rem)' }}
+            >
+              Silent
+            </motion.h1>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.2, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="flex flex-wrap gap-4 mt-12"
-          >
-            <button className="bg-white text-black px-10 py-4 text-xs font-bold tracking-[0.2em] uppercase hover:bg-gray-200 transition-colors duration-300">
-              EXPLORE SERIES
-            </button>
-            <button className="border border-white/40 text-white px-10 py-4 text-xs font-bold tracking-[0.2em] uppercase hover:bg-white/10 transition-colors duration-300">
-              VIEW FILM
-            </button>
-          </motion.div>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.5, duration: 0.8 }}
-            className="mt-8 text-sm text-white/50 max-w-md leading-relaxed"
-          >
-            Redefining oral care through high-contrast aesthetics and sonic precision.
-          </motion.p>
+          {/* Line 2 */}
+          <div className="overflow-hidden">
+            <motion.h1
+              initial={{ y: '110%' }}
+              animate={{ y: '0%' }}
+              transition={{ duration: 1.4, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              className="font-serif text-white leading-[0.85] tracking-[-0.03em]"
+              style={{ fontSize: 'clamp(3.5rem, 15vw, 18rem)' }}
+            >
+              Power<span className="text-white/30">.</span>
+            </motion.h1>
+          </div>
         </motion.div>
 
-        {/* Scroll Indicator */}
+        {/* ── BOTTOM BAR: subtitle + CTAs ── */}
+        <motion.div
+          style={{ opacity: contentOpacity }}
+          className="absolute z-[4] bottom-0 left-0 right-0 px-6 md:px-12 lg:px-16 pb-8 md:pb-10"
+        >
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+            {/* Left: metadata */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.2, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <p className="text-[13px] md:text-sm text-white/40 max-w-xs leading-relaxed">
+                Redefining oral care through sonic precision and minimalist design.
+              </p>
+              <span className="text-[10px] text-white/25 tracking-[0.3em] uppercase mt-2 block">
+                EST. 2024
+              </span>
+            </motion.div>
+
+            {/* Right: Blue CTAs (Apple/Oura style) */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.4, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              className="flex items-center gap-3 md:gap-4"
+            >
+              <a
+                href="#"
+                className="bg-[#0071E3] hover:bg-[#0077ED] text-white px-6 md:px-8 py-3 md:py-3.5 rounded-full text-xs md:text-[13px] font-medium tracking-wide transition-all duration-300 hover:shadow-[0_4px_20px_rgba(0,113,227,0.4)]"
+              >
+                Explore Series
+              </a>
+            </motion.div>
+          </div>
+        </motion.div>
+
+        {/* ── SCROLL INDICATOR ── */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 2, duration: 0.6 }}
-          className="absolute bottom-8 right-8 z-10 flex items-center gap-3"
+          transition={{ delay: 2.2, duration: 0.6 }}
+          className="absolute z-[4] bottom-10 left-1/2 -translate-x-1/2"
         >
-          <span className="font-mono text-[10px] text-white/50 tracking-widest">[ SCROLL ]</span>
-          <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center">
-            <span className="material-symbols-outlined text-sm text-white/50 animate-bounce">arrow_downward</span>
-          </div>
+          <span className="w-[1px] h-8 bg-white/15 block overflow-hidden rounded-full">
+            <motion.span
+              animate={{ y: ['-100%', '100%'] }}
+              transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+              className="block w-full h-full bg-white/50"
+            />
+          </span>
         </motion.div>
+
       </div>
     </section>
   );
