@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { VIDEOS } from '../types';
 
 const Hero: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const heroVideo = `${import.meta.env.BASE_URL}hero-video.mp4`;
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -12,8 +12,6 @@ const Hero: React.FC = () => {
 
   // Scroll-linked transforms
   const videoScale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
-  const productY = useTransform(scrollYProgress, [0, 1], ['0%', '-25%']);
-  const productScale = useTransform(scrollYProgress, [0, 0.5], [1, 1.06]);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
   const textY = useTransform(scrollYProgress, [0, 0.5], ['0%', '8%']);
 
@@ -31,7 +29,7 @@ const Hero: React.FC = () => {
             className="w-full h-full object-cover opacity-60"
             style={{ filter: 'grayscale(0.8) contrast(1.1)' }}
           >
-            <source src={VIDEOS.hero} type="video/mp4" />
+            <source src={heroVideo} type="video/mp4" />
           </video>
         </motion.div>
 
