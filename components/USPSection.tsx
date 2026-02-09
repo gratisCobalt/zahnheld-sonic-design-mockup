@@ -50,19 +50,18 @@ const USPSection: React.FC = () => {
         </motion.div>
 
         {/* Glowing Cards Grid */}
-        <GlowingCards glowRadius={4} glowOpacity={1} gap="1.25rem">
+        <GlowingCards glowRadius={20} glowOpacity={1} gap="1.25rem">
           {usps.map((usp, i) => (
-            <motion.div
+            <GlowingCard
               key={usp.icon}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-              viewport={{ once: true }}
-              className="flex-1 min-w-[280px]"
+              className="p-8 md:p-10 h-full min-w-[280px]"
+              glowColor="#0071E3"
             >
-              <GlowingCard
-                className="p-8 md:p-10 h-full"
-                glowColor="#0071E3"
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                viewport={{ once: true }}
               >
                 <div className="flex items-start gap-5">
                   <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center flex-shrink-0">
@@ -87,8 +86,8 @@ const USPSection: React.FC = () => {
                     </p>
                   </div>
                 </div>
-              </GlowingCard>
-            </motion.div>
+              </motion.div>
+            </GlowingCard>
           ))}
         </GlowingCards>
       </div>
