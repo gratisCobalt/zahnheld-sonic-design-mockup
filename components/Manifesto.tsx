@@ -23,7 +23,10 @@ const WordReveal = ({ word, start, end, scrollYProgress }: {
 }) => {
   const opacity = useTransform(scrollYProgress, [start, end], [0.15, 1]);
   return (
-    <motion.span style={{ opacity }} className={word.isAccent ? 'accent-word' : ''}>
+    <motion.span
+      style={{ opacity }}
+      className={word.isAccent ? 'accent-word-dark' : ''}
+    >
       {word.text}{' '}
     </motion.span>
   );
@@ -33,16 +36,16 @@ const Manifesto: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ['start 0.8', 'end 0.4'],
+    offset: ['start 0.8', 'end 0.3'],
   });
 
   return (
-    <section className="bg-[#f4f4f4] text-black py-32 md:py-48">
+    <section className="bg-white text-[#111] py-32 md:py-48">
       <div ref={containerRef} className="max-w-[1200px] mx-auto px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
           {/* Left: Manifesto Headline */}
           <div>
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight uppercase">
+            <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight uppercase text-[#111]">
               {words.map((word, i) => (
                 <WordReveal
                   key={i}
@@ -62,7 +65,7 @@ const Manifesto: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               viewport={{ once: true }}
-              className="text-lg text-gray-500 leading-relaxed"
+              className="text-lg text-[#555] leading-relaxed"
             >
               High-end daily routines demand tools that are as beautiful
               as they are functional. No gimmicks. Just pure performance
@@ -73,7 +76,7 @@ const Manifesto: React.FC = () => {
               whileInView={{ opacity: 1 }}
               transition={{ delay: 0.2, duration: 0.6 }}
               viewport={{ once: true }}
-              className="section-label text-gray-400 mt-6 block"
+              className="section-label text-[#999] mt-6 block"
             >
               PHILOSOPHY
             </motion.span>
