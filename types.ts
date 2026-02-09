@@ -3,6 +3,18 @@ export interface NavLink {
   href: string;
 }
 
+export interface Product {
+  id: string;
+  number: string;
+  name: string;
+  headline: string;
+  description: string;
+  price: string;
+  cta: string;
+  image: string;
+  variant?: string;
+}
+
 export const IMAGES = {
   hero: "https://lh3.googleusercontent.com/aida-public/AB6AXuC8OFzwz9xSl5UMHZaApuySUE75kFdoGM9myhnYYmfWx-jtjqFYpSN0IGKX2x8IBRCE_67JN3hC3d3Nj-hyGwIzkriIblEuVzEwUzr2V8gUIsFAkqyKW6ACMTQxIdmcRcgZdVWYn_El5hamYMi55ftvcEetQLb8KL9gZS6RrrWPJpCJvWHQsqnQkKmYmVIRBXPhZmNvMf3mxnN2aUJM3FK-f5pYZfntTR3Ho6V7lahPNlJvdaJ5avagQS1PJ80ggNv0Xu0lW6PP0A",
   productMain: "https://lh3.googleusercontent.com/aida-public/AB6AXuDQBbho4XOQP_k32A5r4mPhmIIBx5QCA0SnTVxsZccoTmNTOgJPB3b7ptzqQG5X2tX0KL9Z5SwhFfkS4StJNDx0lV7duAutZO0dfTLb6bAzh4fHeO3ofNCHiAwEFmjn7K_sslLk6m6sReboTSF040z2XIGVszWuJIUADt7EPInqp3QrTSEqs7uNANcgmNF8i6mIwx9fI-9QakdADaFsmmPzvV406Hipx5kIyCap6IzJWpCQpE4PRDe2tkvQeFyWmvKCqpnmspi6mg",
@@ -15,3 +27,34 @@ export const IMAGES = {
 export const VIDEOS = {
   hero: "/hero-video.mp4"
 };
+
+export const PRODUCTS: Product[] = [
+  {
+    id: "sonic-one",
+    number: "01",
+    name: "SONIC ONE",
+    headline: "SONIC\nONE",
+    description: "Forty thousand vibrations. Zero noise. The Sonic One is an architectural masterpiece for your bathroom. Matte black finish, 30-day battery, wireless charging.",
+    price: "$199",
+    cta: "SHOP NOW",
+    image: "productMain",
+    variant: "VARIANT: MIDNIGHT",
+  },
+  {
+    id: "refill-heads",
+    number: "02",
+    name: "REFILL HEADS",
+    headline: "REFILL\nHEADS",
+    description: "Activated charcoal bristles with antibacterial PBT fibers. Designed for a lifetime of replacements. Zero plastic packaging.",
+    price: "$34",
+    cta: "ADD TO CART",
+    image: "bristles",
+  },
+];
+
+export const FEATURES = [
+  { icon: "precision_manufacturing", value: "60,000", suffix: "VPM", label: "Engineered in Germany", desc: "Precision magnetic levitation motor delivering ultrasonic vibrations." },
+  { icon: "battery_charging_full", value: "30", suffix: "DAYS", label: "30-Day Power", desc: "High-density Li-Ion cell. Charge once, use for a month." },
+  { icon: "water_drop", value: "IPX7", suffix: "", label: "Waterproof", desc: "Hermetically sealed aerospace-grade aluminum unibody." },
+  { icon: "tune", value: "03", suffix: "MODES", label: "Smart Modes", desc: "Clean, Sensitive, and Polish. Pressure-sensing AI adapts in real time." },
+];

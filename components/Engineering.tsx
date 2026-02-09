@@ -83,8 +83,16 @@ const Engineering: React.FC = () => {
         </div>
         
         <div className="absolute top-24 left-0 w-full text-center z-20 mix-blend-difference pointer-events-none">
-             <h2 className="text-white font-bold uppercase tracking-tighter text-3xl md:text-5xl mb-2">Engineering</h2>
-             <span className="text-gray-500 font-mono text-[10px] tracking-[0.3em] uppercase block">Exploded View v2.0</span>
+             <motion.div
+               initial={{ opacity: 0, y: 20 }}
+               whileInView={{ opacity: 1, y: 0 }}
+               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+               viewport={{ once: true }}
+             >
+               <span className="section-label text-gray-500 mb-3 block">EXPLODED VIEW</span>
+               <h2 className="text-white font-bold uppercase tracking-tighter text-3xl md:text-5xl mb-2">Engineering</h2>
+               <div className="w-16 h-[1px] bg-white/30 mx-auto mt-4 animate-line-draw"></div>
+             </motion.div>
         </div>
 
         {/* --- MAIN ASSEMBLY CONTAINER --- */}
@@ -135,7 +143,7 @@ const Engineering: React.FC = () => {
              <div className="w-[44px] h-[90px] bg-gradient-to-r from-gray-500 via-gray-300 to-gray-600 rounded-lg border border-gray-400 shadow-xl relative overflow-hidden group">
                 <div className="absolute top-2 left-[2px] right-[2px] h-14 bg-[repeating-linear-gradient(45deg,#b87333,#b87333_2px,#804a1f_2px,#804a1f_4px)] rounded opacity-90 border border-[#b87333]"></div>
                 <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-gray-800 border border-gray-600 flex items-center justify-center">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse shadow-[0_0_10px_#3b82f6]"></div>
+                    <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse-glow shadow-[0_0_10px_#3b82f6]"></div>
                 </div>
              </div>
           </motion.div>
@@ -160,13 +168,13 @@ const Engineering: React.FC = () => {
              </div>
              <div className="w-5 h-10 bg-black border border-gray-700 rounded-sm mb-2"></div>
              <div className="w-full h-full absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/diagmonds-light.png')] opacity-10 pointer-events-none"></div>
-             <div className="w-2 h-2 bg-red-500 rounded-full mt-auto shadow-[0_0_8px_#ef4444] animate-pulse"></div>
+             <div className="w-2 h-2 bg-red-500 rounded-full mt-auto shadow-[0_0_8px_#ef4444] animate-pulse-glow"></div>
           </motion.div>
 
           {/* G. CHARGING COIL */}
           <motion.div style={{ y: coilY }} className="absolute bottom-[12%] z-20 flex flex-col items-center w-full">
              <PartLabel title="Inductive Base" specs="Qi Standard Comp." side="right" yOffset="15px" opacity={labelOpacity} />
-             <div className="w-[54px] h-[25px] rounded-full border-[3px] border-[#d97706] bg-black/50 shadow-[0_0_15px_rgba(217,119,6,0.3)] relative">
+             <div className="w-[54px] h-[25px] rounded-full border-[3px] border-[#d97706] bg-black/50 shadow-[0_0_15px_rgba(217,119,6,0.3)] relative animate-pulse-glow">
                 <div className="absolute inset-0 rounded-full border border-orange-900/50"></div>
              </div>
              <div className="w-[60px] h-[15px] bg-[#111] rounded-b-2xl border-t border-gray-800 mt-[-12px]"></div>
