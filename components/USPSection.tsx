@@ -50,7 +50,7 @@ const USPSection: React.FC = () => {
         </motion.div>
 
         {/* Glowing Cards Grid */}
-        <GlowingCards glowRadius={20} glowOpacity={1} gap="1.25rem">
+        <GlowingCards glowRadius={4} glowOpacity={1} gap="1.25rem">
           {usps.map((usp, i) => (
             <motion.div
               key={usp.icon}
