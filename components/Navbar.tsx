@@ -1,101 +1,95 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+const navLinks = ['Shop', 'Technology', 'About'];
+
 const Navbar: React.FC = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [menuOpen]);
 
   return (
     <>
       <motion.nav
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled 
-            ? 'bg-[#050505]/90 backdrop-blur-md border-b border-white/5 h-16' 
-            : 'bg-transparent h-24 border-b border-transparent'
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
+          scrolled
+            ? 'h-14 bg-black/80 backdrop-blur-xl border-b border-white/5'
+            : 'h-20 bg-transparent'
         }`}
       >
-        <div className="max-w-[1440px] mx-auto px-6 h-full flex items-center justify-between">
-          
-          {/* Left: Desktop Menu */}
-          <div className="flex items-center gap-8">
-            <button 
-              className="lg:hidden text-white hover:text-gray-400 transition-colors" 
-              onClick={() => setIsMobileMenuOpen(true)}
-            >
-              <span className="material-symbols-outlined">menu</span>
-            </button>
-            <div className="hidden lg:flex items-center gap-8">
-              {['Engineering', 'Philosophy', 'Specs'].map((item) => (
-                <a 
-                  key={item} 
-                  href={`#${item.toLowerCase()}`} 
-                  className="text-xs font-bold tracking-[0.2em] text-white/70 hover:text-white transition-colors uppercase relative group"
-                >
-                  {item}
-                  <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span>
-                </a>
-              ))}
-            </div>
+        <div className="max-w-[1440px] mx-auto px-8 h-full flex items-center justify-between">
+          <a href="#" className="text-white font-bold text-lg tracking-tight uppercase">
+            ZAHNHELD
+          </a>
+
+          <div className="absolute left-1/2 -translate-x-1/2 hidden lg:flex gap-8">
+            {navLinks.map((link) => (
+              <a
+                key={link}
+                href="#"
+                className="text-white/70 hover:text-white transition-colors duration-300 text-[11px] font-medium tracking-[0.15em] uppercase"
+              >
+                {link}
+              </a>
+            ))}
           </div>
 
-          {/* Center: Logo */}
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
-            <a href="#" className="text-xl md:text-2xl font-bold tracking-tighter text-white uppercase select-none border border-white/20 px-3 py-1">
-              Zahnheld
-            </a>
-          </div>
-
-          {/* Right: Actions */}
           <div className="flex items-center gap-6">
-            <button className="text-white hover:text-gray-400 transition-colors">
-              <span className="material-symbols-outlined">search</span>
-            </button>
-            <button className="relative text-white hover:text-gray-400 transition-colors flex items-center gap-2">
-              <span className="hidden md:inline text-xs font-bold tracking-widest uppercase">Cart (0)</span>
-              <span className="material-symbols-outlined">shopping_bag</span>
+            <a href="#" className="text-white/70 hover:text-white transition-colors duration-300 text-[11px] font-medium tracking-[0.15em] uppercase hidden sm:block">
+              Cart (0)
+            </a>
+            <button
+              onClick={() => setMenuOpen(true)}
+              className="lg:hidden text-white w-8 h-8 flex flex-col justify-center items-center gap-1.5"
+            >
+              <span className="w-6 h-[1.5px] bg-white"></span>
+              <span className="w-4 h-[1.5px] bg-white"></span>
             </button>
           </div>
         </div>
       </motion.nav>
 
-      {/* Mobile Menu Overlay */}
       <AnimatePresence>
-        {isMobileMenuOpen && (
+        {menuOpen && (
           <motion.div
-            initial={{ opacity: 0, x: '-100%' }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: '-100%' }}
-            transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed inset-0 z-[60] bg-[#050505] flex flex-col p-8 lg:hidden border-r border-white/10"
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+            className="fixed inset-0 z-[60] bg-black flex flex-col"
           >
-            <div className="flex justify-between items-center mb-16">
-              <span className="text-2xl font-bold tracking-tighter uppercase border border-white/20 px-2">Zahnheld</span>
-              <button onClick={() => setIsMobileMenuOpen(false)}>
-                <span className="material-symbols-outlined text-3xl">close</span>
+            <div className="flex items-center justify-between px-8 h-20">
+              <span className="text-white font-bold text-lg tracking-tight uppercase">ZAHNHELD</span>
+              <button onClick={() => setMenuOpen(false)} className="text-white">
+                <span className="material-symbols-outlined text-2xl">close</span>
               </button>
             </div>
-            <div className="flex flex-col gap-8 text-3xl font-light">
-              {['Engineering', 'Philosophy', 'Specs', 'Account'].map((item) => (
-                <a 
-                  key={item} 
-                  href={`#${item.toLowerCase()}`}
-                  className="block border-b border-white/10 pb-4 hover:pl-4 transition-all duration-300" 
-                  onClick={() => setIsMobileMenuOpen(false)}
+            <div className="flex-1 flex flex-col justify-center px-8 gap-8">
+              {[...navLinks, 'Account'].map((link, i) => (
+                <motion.a
+                  key={link}
+                  href="#"
+                  initial={{ opacity: 0, x: 40 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.1 + i * 0.08, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                  onClick={() => setMenuOpen(false)}
+                  className="text-4xl font-bold uppercase tracking-tight text-white hover:text-white/60 transition-colors"
                 >
-                  <span className="text-xs font-mono text-gray-500 block mb-1">0{['Engineering', 'Philosophy', 'Specs', 'Account'].indexOf(item) + 1}</span>
-                  {item}
-                </a>
+                  {link}
+                </motion.a>
               ))}
             </div>
           </motion.div>
